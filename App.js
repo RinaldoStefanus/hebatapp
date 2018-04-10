@@ -11,48 +11,43 @@ import {
   Text,
   View
 } from 'react-native';
+import firebase from 'firebase';
 
-const instructions = Platform.select({
-  ios: 'Press Cmd+R to reload,\n' +
-    'Cmd+D or shake for dev menu',
-  android: 'Double tap R on your keyboard to reload,\n' +
-    'Shake or press menu button for dev menu',
-});
+const styles = require('./styles.js');
 
-type Props = {};
 export default class App extends Component<Props> {
+  componentWillMount(){
+    var config = {
+      apiKey: "AIzaSyC-lHmdO1h_AIWhrIYg3b2ieenyrHCsz-A",
+      authDomain: "sahabat24app.firebaseapp.com",
+      databaseURL: "https://sahabat24app.firebaseio.com",
+      projectId: "sahabat24app",
+      storageBucket: "sahabat24app.appspot.com",
+      messagingSenderId: "191231548803"
+  };
+  firebase.initializeApp(config);
+  // console.log(firebase)
+//   firebase.database().ref('User/0002').set(
+//     {
+//       name:'asoy',
+//       age:'25'
+//     }
+//   ).then(()=>{console.log('INSERTED !');
+//   }).catch((error)=>{
+//   console.log(error);
+// });
+firebase.database().ref('User').once('value', (data)=>{
+  console.log(data.toJSON());
+})
+
+firebase.database().ref('User/0001/age').remove();
+  }
+
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.welcome}>
-          Welcome to React Native!
-        </Text>
-        <Text style={styles.instructions}>
-          To get started, edit App.js
-        </Text>
-        <Text style={styles.instructions}>
-          {instructions}
-        </Text>
+  <Text> im container lol! </Text>
       </View>
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
-});
